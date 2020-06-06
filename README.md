@@ -6,6 +6,8 @@ This is a little but very functional tool to do backups for trivial PHP apps (Ap
 
 ### Setting up
 
+This project use pipenv do you need install all Pipfile dependencies.
+
 Follow the example attached in .databases.yml all fields are required you can't leave blank any
 
 ### Contribute
