@@ -1,0 +1,22 @@
+databases:
+  # Client settings for project and MySQL database
+  # client_name:
+  #   name: 'client_name'
+  #   working_dir: '/path/to/project/'
+  #   host: 'localhost' -> MySQL Host
+  #   username: 'mysql_user' -> MySQL User
+  #   password: 'mysql_password' -> MySQL Password
+  #   database: 'mysql_database_project_name' -> DB name
+  #   log_file: '/path/to/log/',
+  #   backup_dir:
+  #     default: '/path/to/put/backup/file/'
+  test_client:
+    name: 'test_client'
+    working_dir: '/test/path/'
+    host: 'localhost'
+    username: 'test'
+    password: 'test'
+    database: 'test'
+    log_file: 'test_log'
+    backup_dir:
+      default: '/test/project/'
