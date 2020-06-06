@@ -81,7 +81,7 @@ class MasterBackup:
                 time=self.timestamp
             )
         
-            task = os.popen("mysqldump -h {host} -u {user} -p{password} -e --opt -c {database} > {backup}".format(
+            task = os.popen("mysqldump -u {user} -p{password} -e --opt -c {database} > {backup}".format(
                  host=self.active_client['host'],
                  user=self.active_client['username'],
                  password=self.active_client['password'],
