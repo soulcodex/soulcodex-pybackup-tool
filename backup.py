@@ -128,17 +128,44 @@ class MasterBackup:
                 self.logger.warn(msg)
                 raise Exception(msg)
             
+    def get_file_paths(self, path: str):
+        # Files paths
+        filePaths = []
+        
+        for root, dirs, files in os.walk(path):
+            for filename in files:
+                filePath = os.path.join(root, filename)
+                filePaths.append(filePath)
+        
+        return filePaths
+            
     def compress_and_save(self):
         if(len(self.tmpPaths.keys()) > 0):
             try:
                 self.logger.info('ZIP Compression [START]')
-                zip_file_name = "{base}{name}_{timestamp}".format(
+                zip_file_name = "{base}{name}_{timestamp}.zip".format(
                     base=self.active_client['backup_dir']['default'],
                     name=self.active_client['name'],
                     timestamp=self.timestamp
                 )
                 
-                zip_file_task = shutil.make_archive(zip_file_name, 'zip', self.backup_dir)
+                zip_file = zipfile.ZipFile(
+                    zip_file_name,
+                    'w',
+                    zipfile.ZIP_DEFLATED
+                )
+                
+                filePaths = self.get_file_paths(self.backup_dir)
+                
+                # Patch timestamps before 1980 error
+                timestamp = time.mktime((1980, 1, 1, 0, 0, 0, 0, 0, 0))
+                
+                with zip_file:
+                    for path in filePaths:
+                        os.utime(path, (timestamp, timestamp))
+                        zip_file.write(path)
+                
+                        
                 self.logger.info('ZIP Compression [SUCCESS]')
                 
                 shutil.rmtree(self.backup_dir)
